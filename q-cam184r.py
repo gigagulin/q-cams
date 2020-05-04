@@ -29,7 +29,7 @@ Reg3lb=N*4-1							# last qubit number of Reg3
 
 # --------  Q-Process   ----------------------------------------------------------
 
-def proc():
+def qproc():
 	
 	for i in range(N-1):
 		c.ccx[i, 1+i, Reg1sb+i].x[Reg1sb+i]		#indicating congestion cells
@@ -67,7 +67,7 @@ while ret=='y':
 	qcam.propinit(N,c,pinitial_a)
 
 	t0=time.time()
-	proc()
+	qproc()
 	master_a=c.run()
 
 	t1=time.time()		

@@ -5,7 +5,7 @@
 # Reqirments			: blueqat and numpy module are required.						+
 # Arguments	: 1st   : c	: Circuit class of Blueqat								+
 #		: 2nd-n : c0-cn : control qubits									+	 
-#		: last		: target qubit										+		
+#		: last  : ta	: target qubit										+		
 # Return value	: None													+
 #-----------------------------------------------------------------------------------------------------------------------+
 

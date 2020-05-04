@@ -1,4 +1,4 @@
-﻿# q-cambb (q-cam Ball & Box) by Gigagulin
+﻿# q-cambb (q-cam periodical Ball & Box / carrior model ) by Gigagulin  <April 2020>
 
 from blueqat import Circuit
 import numpy as np
@@ -8,52 +8,103 @@ import time
 
 # -------- Setting ------------------------------------------------------------------
 
-N=9									# number of box (qubit) 
-M=4									# number of ball
-R=2									# number of registries
+N=7								# number of box (qubit) 
+R=3								# number of registries
 
-CI=[0,1,2,3,4,5,6,7,8,0,1,2,3]
-flagA=2*N
-flagB=2*N+1
-flagC=2*N+2
-
-initial_a=np.array([0,0,1,1,1,0,0,0,1],dtype='float')	# initial probability distribution 
+initial_a=np.array([0,1,0,0,0,1,1],dtype='float')		# initial probability distribution 
 
 prob=np.array([0]*100,dtype='float')
 vector_a=np.array([[0]*N]*(2^N),dtype='int')
 csum_a=np.array([[0]*N]*(2^N),dtype='float')
-stepdist_a=np.array([[0]*N]*100,dtype='float')				# [step-number,cell-number]
+stepdist_a=np.array([[0]*N]*100,dtype='float')			# [step-number,cell-number]
 probability_a=np.array([0]*N,dtype='float')
 stepdist_a[0,0:N]=initial_a[0:N]
 stdev_a=np.array([0]*100,dtype='float')
 
+R0=list(range(N))
+R0[N:N]=list(range(N))
+R1=list(range(N,2*N))
+R1[N:N]=list(range(N,2*N))
+ 
+#R2=list(range(2*N,R*N))
+#CA0=R*N+1							# ball carrier
+#CA1=R*N+2
+#CA2=R*N+3
+#XC0=R*N+4							# carrier empty or occupied flag
+#XC1=R*N+5
+#XC2=R*N+6
+
+# to reduce number of qubits
+R2=[14,15,16,17,14,15,16]
+CA0=18								# ball carrier
+CA1=19
+CA2=20
+XC0=21								# carrier empty or occupied flag
+XC1=22
+XC2=23
+							
 
 #-------  Q-Process Ball and Box (Soliton)  ----------------------------------
 
-def Proc():
-
-	for i in range(N):
-		c.cx[i,i+N]
-
-	c.x[flagA,flagB,flagC]
-
-	for i in range(N):
-
-		q.ccccx(c,i+N,CI[i+1],CI[i+2],CI[i+3],CI[i+4])
-		c.ccx[CI[i+4],CI[i+3],flagA]
+def qproc():
 	
-		q.ccccx(c,i+N,flagA,CI[i+1],CI[i+2],CI[i+3])
-		c.ccx[CI[i+3],CI[i+2],flagB]
-				
-		q.cccx(c,i+N,flagB,CI[i+1],CI[i+2])
-		c.ccx[CI[i+2],CI[i+1],flagC]
+	for i in range(N):
+		c.cx[R0[i],R1[i]]				# copy to R1
+
+	c.x[XC0,XC1,XC2]					#  carrier flag sets when the carrier is empty, XCn=1
+
+	for i in range(N):					# first round
+
+		q.cccx(c,R0[i],R1[i],XC0,CA0)			# if R0=R1=1 and CA0(XC0=1) is empty, loading to CA0
+		c.ccx[R1[i],CA0,XC0]				# if CA0 is loaded, XC0 turns
 		
-		c.ccx[i+N,flagC,CI[i+1]]
+		q.ccccx(c,R0[i],R1[i],XC0,XC1,CA1)		# if R0=R1=1=1 and CA0 is occupied and CA1(XC1=1) is empty, loading to CA1
+		c.ccx[R1[i],CA1,XC1].ccx[R1[i],CA1,XC0]		# if CA1 is loaded, XC1 turns
+	
+		q.cccccx(c,R0[i],R1[i],XC0,XC1,XC2,CA2)		# if R0=R1=1=1and CA0 and CA1 are occupied and CA2(XC2=1) is empty, loading to CA2
+		c.ccx[R1[i],CA2,XC2]				# if CA2 is loaded, XC2 turns
 
-		c.ccx[CI[i+4],CI[i+3],flagA].ccx[CI[i+3],CI[i+2],flagB].ccx[CI[i+2],CI[i+1],flagC]
+		c.x[R0[i],CA2,XC2].ccx[R0[i],XC2,CA2]		# if R0 and R1 are empty and CA2(XC2=0) is occupied, unloding from CA2			 
+		c.ccx[XC2,CA2,R0[i]].x[R0[i],R1[i]]		# if CA2 is changed, R0 turns		
+		q.cccx(c,R0[i],R1[i],CA2,XC2)			# if CA2 is changed, R0[i] are ocuippied and R1[i] is empty, XC2 turns		 		
+		c.x[R1[i],CA2,XC2]
 
-	for i in range(N):	
-		c.cx[i+N,i]
+		c.x[R0[i],CA1,XC1].ccx[R0[i],XC1,CA1]		# if R0 and R1 are empty and CA1(XC1=0) is occupied, unloding from CA1			 
+		c.ccx[XC1,CA1,R0[i]].x[R0[i],R1[i]]		# if CA1 is changed, R0 turns		
+		q.cccx(c,R0[i],R1[i],CA1,XC1)			# if CA1 is changed, R0[i] are ocuippied and R1[i] is empty, XC1 turns		 		
+		c.x[R1[i],CA1,XC1]
+
+		c.x[R0[i],CA0,XC0].ccx[R0[i],XC0,CA0]		# if R0 and R1 are empty and CA0(XC0=0) is occupied, unloding from CA0			 
+		c.ccx[XC0,CA0,R0[i]].x[R0[i],R1[i]]		# if CA0 is changed, R0 turns		
+		q.cccx(c,R0[i],R1[i],CA0,XC0)			# if CA0 is changed, R0[i] are ocuippied and R1[i] is empty, XC0 turns		 		
+		c.x[R1[i],CA0,XC0]
+
+	#for i in range(N):					# second round (unloading only)
+								# to prevnet a contradiction of periodic boundary conditions
+	for i in range(4):
+
+		c.x[R0[i],R2[i],CA2,XC2]
+		c.ccx[R0[i],XC2,CA2]				# if R0 is empty and CA2(XC2=0)is occupied, unloading from CA2
+		c.ccx[CA2,XC2,R2[i]].x[R2[i]]			# if CA2 is chnaged, R2 turns
+		c.ccx[R2[i],CA2,XC2].x[R0[i],CA2,XC2]		# if CA2 is chnaged, XC2 turns
+		
+		c.x[R0[i],R2[i],CA1,XC1]
+		q.ccccx(c,R0[i],R2[i],XC2,XC1,CA1)		# if R0 is empty, CA1(XC1=0)is occupied and R2 and XC2 is unchanged, unloading from CA1
+		c.ccx[CA1,XC1,R2[i]].x[R2[i]]			# if CA1 is chnaged, R2 turns
+		c.ccx[R2[i],CA1,XC1].x[R0[i],CA1,XC1]		# if CA1 is chnaged, XC1 turns
+
+		c.x[R0[i],R2[i],CA0,XC0]
+		q.cccccx(c,R0[i],R2[i],XC2,XC1,XC0,CA0)		# if R0 is empty, CA0(XC0=0)is occupied and R2,XC2 and XC1 is unchanged, unloading from CA0
+		c.ccx[CA0,XC0,R2[i]].x[R2[i]]			# if CA0 is chnaged, R2 turns
+		c.ccx[R2[i],CA0,XC0].x[R0[i],CA0,XC0]		# if CA0 is chnaged, XC0 turns
+		
+	for i in range(N):
+		c.cx[R1[i],R0[i]]		
+	#	c.cx[R2[i],R0[i]]
+
+	for i in range(4):
+		c.cx[R2[i],R0[i]]
+
 
 	return
 
@@ -67,7 +118,8 @@ while ret=='y':
 	pstep+=1
 	cst=time.time()
 
-	c=Circuit(N*R+3)
+	#c=Circuit(R*N+6)
+	c=Circuit(24)
 
 	pinitial_a=probability_a	
 	if pstep==1:
@@ -76,7 +128,7 @@ while ret=='y':
 	qcam.propinit(N,c,pinitial_a)
 
 	t0=time.time()
-	Proc()
+	qproc()
 
 	master_a=np.array(c.run())
 	t1=time.time()

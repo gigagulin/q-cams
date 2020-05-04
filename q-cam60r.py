@@ -20,16 +20,12 @@ Reg0sb=0							# start qubit number of Reg0
 Reg1sb=N							# start qubit number of Reg1
 Reg2sb=N*2							# start qubit number of Reg2
 Reg3sb=N*3							# start qubit number of Reg3
-Reg0lb=N-1							# last qubit number of Reg0
-Reg1lb=N*2-1							# last qubit number of Reg1
-Reg2lb=N*3-1							# last qubit number of Reg2
-Reg3lb=N*4-1							# last qubit number of Reg3
 
 # --------  Q-Process -----------------------------------------------------------------------
 
 def qproc():
-	c.cx[Reg0lb,Reg0sb]
-	for i in range(N,1,-1):
+
+	for i in range(N,0,-1):
 		c.cx[i-1, i]	
 	return
 		

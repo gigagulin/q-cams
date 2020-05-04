@@ -1,8 +1,9 @@
 ﻿
-#------------------- qcam (qcam modules) ver.1.2  19th Mra.2020 by gigagulin -------------------------------------------+
+#------------------- qcam (qcam modules) ver.1.5  19th Mra.2020 by Gigagulin -------------------------------------------+
 #															+
-# Purrpose of qcam modules 	: qubits of REG_0 for qcam setting from the cell					+
-# Reqirments			: 											+
+# Purrpose of qcam modules 	: Using for q-cam programs but regarding "propinit" and  "qvextract"			+								+
+# 				  it's possible to use more general purpose for Blueqat.				+
+#  															+
 #-----------------------------------------------------------------------------------------------------------------------+
 
 import numpy as np
@@ -135,7 +136,7 @@ def qcfinal(NN, laststep,finitial_a, fstepdist_a, fstdev_a):
 
 	for i in range(laststep+1):
 		msum=np.sum(fstepdist_a[i])
-		print('{0:3g}'.format(i+1),end='   ')	
+		print('{0:3g}'.format(i),end='   ')	
 		for j in range(NN):		
 			print('{0:>5,.2f}'.format(fstepdist_a[i,j]),end=' ')
 
@@ -151,7 +152,7 @@ def qcfinal(NN, laststep,finitial_a, fstepdist_a, fstdev_a):
 
 def qcresultout(NN,rpstep,rnum,rinitial_a,rresult_a,rprobab_a,pstd,prodistri_a):	
 		
-	print(' >Time','{0:3g}'.format(rpstep),' Inital Cell-Probability ',end='=> ')
+	print(' >Time','{0:3g}'.format(rpstep-1),' Inital Cell-Probability ',end='=> ')
 	pinitstd=np.std(rinitial_a)
 	for i in range(NN):
 		print('{0:>5,.2f}'.format(rinitial_a[i]), end=' ')
@@ -180,21 +181,21 @@ def qcresultout(NN,rpstep,rnum,rinitial_a,rresult_a,rprobab_a,pstd,prodistri_a):
 # Purpose	: Plot Result in graph 	: gray scale represents the each cell probability				+
 # Arguments	: 1st: NN		: Number of cells								+
 #		: 2nd: pl		: Last step time								+								+
-#		: 3rd: stepr_a		: 2D array : whole time cell probability set					+					+
+#		: 3rd: stepr_a		: 2D array : whole time cell probability set					+
 # Return value	: None													+
 #-----------------------------------------------------------------------------------------------------------------------+
 
 def qcamplot(NN, pl, stepr_a):
 
-	fig =plt.figure(figsize=(NN/4,pl/2.2))
+	fig =plt.figure(figsize=(NN/2,pl/2.2))
 
 	plt.xlim(0,NN)
-	plt.ylim(0,pl)
+	plt.ylim(0,pl+1)
 
 	plt.xlabel('Cell',fontsize=10)
 	plt.ylabel('Time',fontsize=10)
 	
-	for i in range(pl):
+	for i in range(pl+1):
 		for j in range(NN):
 			grays=str(1.0000-stepr_a[i,j])
 			plt.plot(j+0.5,i+0.5,marker="s", color = grays , markersize=20)
@@ -229,7 +230,7 @@ def calcflow(NN, fnum,fvect_a,fcong_a,fprob_a):
 
 def jamout(NN,rpstep,rnum,rinitial_a,rresult_a,rprobab_a,pstd,prodistri_a,fr,fcell_a):	
 		
-	print(' >Time','{0:3g}'.format(rpstep),' Inital Cell-Probability ',end='=> ')
+	print(' >Time','{0:3g}'.format(rpstep-1),' Inital Cell-Probability ',end='=> ')
 	pinitstd=np.std(rinitial_a)
 	for i in range(NN):
 		print('{0:>5,.2f}'.format(rinitial_a[i]), end=' ')
@@ -272,7 +273,7 @@ def jamfinal(NN, lastep,finitial_a, fstepdist_a, fstdev_a, ffr_a):
 
 	for i in range(lastep+1):
 		msum=np.sum(fstepdist_a[i])
-		print('{0:3g}'.format(i+1),end='   ')	
+		print('{0:3g}'.format(i),end='   ')	
 		for j in range(NN):		
 			print('{0:>5,.2f}'.format(fstepdist_a[i,j]),end=' ')
 

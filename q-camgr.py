@@ -3,7 +3,7 @@
 from blueqat import Circuit
 import numpy as np
 import qcam
-import qmcn
+import qmcn as q
 
 # -------- Setting ------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ prob=np.array([0]*100,dtype='float')
 def marking():								# marking |11111>
 
 	c.h[N-1]
-	qmcn.cccccx(c,0,1,2,3,4,5)
+	q.cccccx(c,0,1,2,3,4,5)
 	c.h[N-1]
 
 	return
@@ -26,7 +26,7 @@ def marking():								# marking |11111>
 def amp():
 
 	c.h[:].x[:].h[N-1]
-	qmcn.cccccx(c,0,1,2,3,4,5)
+	q.cccccx(c,0,1,2,3,4,5)
 	c.h[N-1].x[:].h[:]
 
 	return

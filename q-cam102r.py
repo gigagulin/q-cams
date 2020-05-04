@@ -9,7 +9,7 @@ import qcam
 N=17								# number of cells
 R=1								# number of registries
 
-initial_a=np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.8],dtype='float')	# initial set
+initial_a=np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.99],dtype='float')	# initial set
 max_step=200							# maximum steps
 stepdist_a=np.array([[0]*N]*max_step,dtype='float')		# [step-number,cell-number]
 probability_a=np.array([0]*N,dtype='float')
@@ -20,17 +20,12 @@ Reg0sb=0							# start qubit number of Reg0
 Reg1sb=N							# start qubit number of Reg1
 Reg2sb=N*2							# start qubit number of Reg2
 Reg3sb=N*3							# start qubit number of Reg3
-Reg0lb=N-1							# last qubit number of Reg0
-Reg1lb=N*2-1							# last qubit number of Reg1
-Reg2lb=N*3-1							# last qubit number of Reg2
-Reg3lb=N*4-1							# last qubit number of Reg3
 
 # --------  Q-Process -----------------------------------------------------------------------
 
 def qproc():
-	for i in range(N-1):
+	for i in range(N):
 		c.cx[1+i, i]
-	c.cx[Reg0sb,Reg0lb]
 	return
 		
 # -------- Main Body --------------------------------------------------------------

@@ -9,7 +9,7 @@ import qcam
 N=8								# number of cells
 R=3								# number of registries
 
-initial_a=np.array([0,0,0,0,1,0,0,0],dtype='float')		# initial probability distribution
+initial_a=np.array([0,0,0,0,0.85,0,0,0],dtype='float')		# initial probability distribution
 max_step=200							# maximum steps
 stepdist_a=np.array([[0]*N]*max_step,dtype='float')		# [step-number,cell-number]
 probability_a=np.array([0]*N,dtype='float')
@@ -33,15 +33,13 @@ def qproc():
 		c.ccx[i, 1+i, Reg1sb+i]
 	c.ccx[Reg0lb,Reg0sb,Reg1lb]
 	for i in range(N):
-		c.cx[i, Reg2sb+i]
-		
+		c.cx[i, Reg2sb+i]	
 	for i in range(N-1):
 		c.cx[Reg2sb+i,i+1]
 	c.cx[Reg2lb,Reg0sb]
 	for i in range(N-1):
 		c.cx[Reg2sb+i+1, i]
 	c.cx[Reg2sb,Reg0lb]
-
 	for i in range(N):
 		c.cx[Reg1sb+i,i]				# error correction
 			
