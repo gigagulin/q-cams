@@ -73,7 +73,7 @@ def qcalcd(NN, cnum, cvect_a, cprobare_a):
 # -------- propinit (Initial Cell)s (=Reg0 qubits) Q-Setting <Rotation around a Y-axis>  -------------------------------+
 # Purpose	: Setting qubits based on each cell probability by rotation gate					+
 # Arguments	: 1st: NN		: Number of cells								+
-#		: 2nd: c		: Circuit class of blueqat							+
+#		: 2nd: c		: Circuit object of blueqat							+
 #		: 3rd: ppinit_a		: a single array of each cell probability					+
 # Return value	: None													+
 #-----------------------------------------------------------------------------------------------------------------------+
