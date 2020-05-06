@@ -3,7 +3,7 @@
 #															+
 # Purrpose of qmcn modules 	: Multi Control Not Gates for Blueqat							+				  
 # Reqirments			: blueqat and numpy module are required.						+
-# Arguments	: 1st   : c	: Circuit class of Blueqat								+
+# Arguments	: 1st   : c	: Circuit object of Blueqat								+
 #		: 2nd-n : c0-cn : control qubits									+	 
 #		: last  : ta	: target qubit										+		
 # Return value	: None													+
