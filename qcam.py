@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 # -------- qvextract (Result Extract)  ---------------------------------------------------------------------------------+
 # Purpose	: Extraction for vectors and probability from Blueqat							+
 # Arguments	: 1st: NN		: Number of cells								+
-#		: 2nd: RN		: Number of Registories								+
+#		: 2nd: RN		: Number of registers								+
 #		: 3rd: RW		: Registory number you want to extract ( 1 except rule184)			+
 #		: 4th: extract_a	: not shos result of Blueqat  (single array or list of amplitude probability)	+		
 # Return value	: nm : number of the etracted vectors									+
