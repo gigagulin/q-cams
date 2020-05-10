@@ -7,7 +7,7 @@ import qcam
 # -------- Setting ------------------------------------------------------------------
 
 N=17								# number of cells
-R=1								# number of registries
+R=1								# number of registers
 
 initial_a=np.array([0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],dtype='float')	# initial set
 max_step=200							# maximum steps
