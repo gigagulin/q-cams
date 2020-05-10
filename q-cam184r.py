@@ -8,7 +8,7 @@ import time
 # -------- Setting ------------------------------------------------------------------
 
 N=5								# number of cells
-R=4								# number of registries
+R=4								# number of registers
 initial_a=np.array([1,0,1,0,1],dtype='float')			# initial probability distribution
 max_step=200							# maximum steps
 
