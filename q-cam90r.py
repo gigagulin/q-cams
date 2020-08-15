@@ -7,7 +7,7 @@ import qcam
 # -------- Setting ------------------------------------------------------------------
 
 N=9								# number of cells
-R=2								# number of registries
+R=2								# number of registers
 initial_a=np.array([0,0,0,0,0.6,0,0,0,0],dtype='float')		# initial probability distribution
 max_step=200							# maximum steps
 stepdist_a=np.array([[0]*N]*max_step,dtype='float')		# [step-number,cell-number]

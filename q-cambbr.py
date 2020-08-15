@@ -9,7 +9,7 @@ import time
 # -------- Setting ------------------------------------------------------------------
 
 N=7								# number of box (qubit) 
-R=3								# number of registries
+R=3								# number of registers
 
 initial_a=np.array([0,1,0,0,0,1,1],dtype='float')		# initial probability distribution 
 
