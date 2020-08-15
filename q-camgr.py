@@ -1,4 +1,4 @@
-﻿# q-camgr (q-cam Grover) ver 1.0 by Gigagulin
+﻿# q-camgr (q-cam Grover) 15th Aug 2020 by Gigagulin
 
 from blueqat import Circuit
 import numpy as np

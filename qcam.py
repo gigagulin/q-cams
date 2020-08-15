@@ -1,5 +1,5 @@
 ﻿
-#------------------- qcam (qcam modules) ver.1.5  19th Mra.2020 by Gigagulin -------------------------------------------+
+#------------------- qcam (qcam modules) ver.1.5  15th Aug 2020 by Gigagulin -------------------------------------------+
 #															+
 # Purrpose of qcam modules 	: Using for q-cam programs but regarding "propinit" and  "qvextract"			+								+
 # 				  it's possible to use more general purpose for Blueqat.				+

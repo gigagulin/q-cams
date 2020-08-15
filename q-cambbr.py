@@ -1,4 +1,4 @@
-﻿# q-cambb (q-cam periodical Ball & Box / carrior model ) by Gigagulin  <April 2020>
+﻿# q-cambb (q-cam periodical Ball & Box / carrior model ) by Gigagulin  15th Aug 2020
 
 from blueqat import Circuit
 import numpy as np
@@ -26,14 +26,6 @@ R0[N:N]=list(range(N))
 R1=list(range(N,2*N))
 R1[N:N]=list(range(N,2*N))
  
-#R2=list(range(2*N,R*N))
-#CA0=R*N+1							# ball carrier
-#CA1=R*N+2
-#CA2=R*N+3
-#XC0=R*N+4							# carrier empty or occupied flag
-#XC1=R*N+5
-#XC2=R*N+6
-
 # to reduce number of qubits
 R2=[14,15,16,17,14,15,16]
 CA0=18								# ball carrier

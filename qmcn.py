@@ -1,5 +1,5 @@
 ﻿
-#-------------- qmcn modules ( q- Multi Control Not Gates) Ver1.0   19th Mar.2020 by Gigagulin -------------------------+
+#-------------- qmcn modules ( q- Multi Control Not Gates)          15th Aug 2020 by Gigagulin -------------------------+
 #															+
 # Purrpose of qmcn modules 	: Multi Control Not Gates for Blueqat							+				  
 # Reqirments			: blueqat and numpy module are required.						+

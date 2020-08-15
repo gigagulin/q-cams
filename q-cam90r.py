@@ -1,4 +1,4 @@
-﻿# q-cam rule90 by Gigagulin
+﻿# q-cam rule90 by Gigagulin 15th Aug 2020
 
 from blueqat import Circuit
 import numpy as np
